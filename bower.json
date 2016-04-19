@@ -1,16 +1,17 @@
 {
   "name": "angular-dpd",
+  "main": "angular-dpd.js",
+  version: "0.0.1",
   "homepage": "https://github.com/Ionut33/angular-dpd",
   "authors": [
     "Ionut Moldovan <ionut.moldovan@gosocialdev.eu>"
   ],
-  "description": "angular-dpd",
-  "main": "angular-dpd.js",
+  "description": "",
   "moduleType": [
-    "globals"
+    "global"
   ],
+  private: false,
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
