@@ -99,7 +99,7 @@ angular.module('dpd', []).value('dpdConfig', [])
             }
             dpd[d].get = function(o, s, e) {
                 if (typeof o == "string") {
-                    return $http.get(serverRoot + '/' + d + '/' + o, { withCredentials: true }).success(function(data, status, headers, config) {
+                    return $http.get(serverRoot + '/' + d + '/' + o, { withCredentials: true }).then(function(data, status, headers, config) {
                         if (!dpd[d].cache) return;
                         var add = true;
                         for (var i in dpd[d].cache.all) {
@@ -110,37 +110,37 @@ angular.module('dpd', []).value('dpdConfig', [])
                         }
                         if (add)
                             dpd[d].cache.all.push(data);
-                    }).success(checkUndefinedFunc(s)).error(ef).error(checkUndefinedFunc(e));
+                    }).then(checkUndefinedFunc(s)).catch(ef).catch(checkUndefinedFunc(e));
                 } else {
                     if (typeof o == "function") {
                         e = s;
                         s = o;
-                        return $http.get(serverRoot + '/' + d, { withCredentials: true }).success(function(data, status, headers, config) {
+                        return $http.get(serverRoot + '/' + d, { withCredentials: true }).then(function(data, status, headers, config) {
                             if (!dpd[d].cache) return;
                             dpd[d].cache.all = data;
-                        }).success(checkUndefinedFunc(s)).error(ef).error(checkUndefinedFunc(e));
+                        }).then(checkUndefinedFunc(s)).catch(ef).catch(checkUndefinedFunc(e));
                     } else {
                         if (isComplexQuery(o)) {
                             var query = encodeURI(JSON.stringify(o));
-                            return $http.get(serverRoot + '/' + d + '?' + query, { withCredentials: true }).success(function(data, status, headers, config) {
+                            return $http.get(serverRoot + '/' + d + '?' + query, { withCredentials: true }).then(function(data, status, headers, config) {
                                 if (!dpd[d].cache) return;
                                 dpd[d].cache.all = data;
-                            }).success(checkUndefinedFunc(s)).error(ef).error(checkUndefinedFunc(e));
+                            }).then(checkUndefinedFunc(s)).catch(ef).catch(checkUndefinedFunc(e));
                         } else {
                             return $http.get(serverRoot + '/' + d, {
                                 params: o,
                                 withCredentials: true
-                            }).success(function(data, status, headers, config) {
+                            }).then(function(data, status, headers, config) {
                                 if (!dpd[d].cache) return;
                                 dpd[d].cache.all = data;
-                            }).success(checkUndefinedFunc(s)).error(ef).error(checkUndefinedFunc(e));
+                            }).then(checkUndefinedFunc(s)).catch(ef).catch(checkUndefinedFunc(e));
                         }
                     }
                 }
             };
 
             dpd[d].put = function(id, o, s, e) {
-                return $http.put(serverRoot + '/' + d + '/' + id, o, { withCredentials: true }).success(function(data, status, headers, config) {
+                return $http.put(serverRoot + '/' + d + '/' + id, o, { withCredentials: true }).then(function(data, status, headers, config) {
                     if (!dpd[d].cache) return;
                     var add = true;
                     for (var i in dpd[d].cache.all) {
@@ -151,25 +151,25 @@ angular.module('dpd', []).value('dpdConfig', [])
                     }
                     if (add)
                         dpd[d].cache.all.push(data);
-                }).success(checkUndefinedFunc(s)).error(ef).error(checkUndefinedFunc(e));
+                }).then(checkUndefinedFunc(s)).catch(ef).catch(checkUndefinedFunc(e));
             };
 
             dpd[d].post = function(o, s, e) {
-                return $http.post(serverRoot + '/' + d + '/', o, { withCredentials: true }).success(function(data, status, headers, config) {
+                return $http.post(serverRoot + '/' + d + '/', o, { withCredentials: true }).then(function(data, status, headers, config) {
                     if (!dpd[d].cache) return;
                     dpd[d].cache.all.push(data);
-                }).success(checkUndefinedFunc(s)).error(ef).error(checkUndefinedFunc(e));
+                }).then(checkUndefinedFunc(s)).catch(ef).catch(checkUndefinedFunc(e));
             };
 
             dpd[d].del = function(id, s, e) {
-                return $http.delete(serverRoot + '/' + d + '/' + id, { withCredentials: true }).success(function(data, status, headers, config) {
+                return $http.delete(serverRoot + '/' + d + '/' + id, { withCredentials: true }).then(function(data, status, headers, config) {
                     if (!dpd[d].cache) return;
                     for (var i in dpd[d].cache.all) {
                         if (dpd[d].cache.all[i].id == id) {
                             dpd[d].cache.all.splice(i, 1);
                         }
                     }
-                }).success(checkUndefinedFunc(s)).error(ef).error(checkUndefinedFunc(e));
+                }).then(checkUndefinedFunc(s)).catch(ef).catch(checkUndefinedFunc(e));
             };
 
             dpd[d].save = function(obj, s, e) {
@@ -181,7 +181,7 @@ angular.module('dpd', []).value('dpdConfig', [])
             };
             
             dpd[d].exec = function (func, o, s, e) {
-                return $http.post(serverRoot + '/' + d + '/' + func, o, { withCredentials: true }).success(checkUndefinedFunc(s)).error(ef).error(checkUndefinedFunc(e));                
+                return $http.post(serverRoot + '/' + d + '/' + func, o, { withCredentials: true }).then(checkUndefinedFunc(s)).catch(ef).catch(checkUndefinedFunc(e));                
             }
 
             dpd[d].on = function(scope, event, f) {
