@@ -1,2 +1,2 @@
 # angular-dpd
-works with up to angular 1.4.3
+works with angular > 1.4.3
